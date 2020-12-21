@@ -5,7 +5,7 @@ import FormControl from '@material-ui/core/FormControl';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
-import { TERM_API_URL, LANGUAGE_API_URL, EXAMPLE_API_URL } from './api-config';
+import { TERM_API_URL, LANGUAGE_API_URL, EXAMPLE_API_URL, safeHeaders } from './api-config';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -56,7 +56,7 @@ export default function EditTermForm(props) {
 
 
     try {
-        const resp = await axios.post(EXAMPLE_API_URL, newExample);
+        const resp = await axios.post(EXAMPLE_API_URL, newExample, safeHeaders);
         console.log(resp.data);
         history.push(`/terms/display/${props.termId}`);
         
@@ -86,7 +86,7 @@ export default function EditTermForm(props) {
       setDataLoading(true);
 
         try {
-        const result = await axios.get(`${TERM_API_URL}/${props.termId}`);
+        const result = await axios.get(`${TERM_API_URL}/${props.termId}`, safeHeaders);
         setTermData(result.data);
         setEgLang(result.data.main_lang_id);
 
@@ -108,7 +108,7 @@ export default function EditTermForm(props) {
       setListLoading(true);
 
         try {
-        const result = await axios.get(`${LANGUAGE_API_URL}`);
+        const result = await axios.get(`${LANGUAGE_API_URL}`, safeHeaders);
         const langArray = [];
         result.data.forEach((lang)=>langArray.push({langID: lang.lang_id, shortName: lang.short_name}));
         //console.log(langArray);

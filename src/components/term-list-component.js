@@ -11,7 +11,7 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import { Link as RouterLink } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 import axios from 'axios';
-import { TERM_API_URL } from './api-config.js';
+import { TERM_API_URL, safeHeaders } from './api-config.js';
 import moment from 'moment';
 
 const useStyles = makeStyles({
@@ -34,7 +34,7 @@ export default function DenseTable() {
       setIsLoading(true);
 
         try {
-        const result = await axios.get(TERM_API_URL);
+        const result = await axios.get(TERM_API_URL, safeHeaders);
         setTermData(result.data);
       } catch (error) {
         setIsError(true);

@@ -7,7 +7,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
-import { TERM_API_URL, LANGUAGE_API_URL } from './api-config';
+import { TERM_API_URL, LANGUAGE_API_URL, safeHeaders } from './api-config';
 import Typography from '@material-ui/core/Typography';
 import { useHistory } from "react-router-dom";
 
@@ -62,7 +62,7 @@ export default function EditTermForm(props) {
 
 
     try {
-        const resp = await axios.put(`${TERM_API_URL}/${props.termId}`, newTerm);
+        const resp = await axios.put(`${TERM_API_URL}/${props.termId}`, newTerm, safeHeaders);
         console.log(resp.data);
         history.push(`/terms/display/${props.termId}`);
     } catch (err) {
@@ -90,7 +90,7 @@ export default function EditTermForm(props) {
       setDataLoading(true);
 
         try {
-        const result = await axios.get(`${TERM_API_URL}/${props.termId}`);
+        const result = await axios.get(`${TERM_API_URL}/${props.termId}`, safeHeaders);
         //setTermData(result.data);
         //console.log(result.data);
         setMainTerm(result.data.main_term);
@@ -117,7 +117,7 @@ export default function EditTermForm(props) {
       setListLoading(true);
 
         try {
-        const result = await axios.get(`${LANGUAGE_API_URL}`);
+        const result = await axios.get(`${LANGUAGE_API_URL}`, safeHeaders);
         const langArray = [];
         result.data.forEach((lang)=>langArray.push({langID: lang.lang_id, shortName: lang.short_name}));
         //console.log(langArray);

@@ -1,11 +1,10 @@
 import React, {Fragment, useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
-import { TERM_API_URL, EXAMPLE_API_URL } from './api-config';
+import { TERM_API_URL, EXAMPLE_API_URL, safeHeaders } from './api-config';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
 import { Link as RouterLink } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
@@ -62,7 +61,7 @@ export default function TermDisplayComponent(props) {
       setIsTermLoading(true);
 
         try {
-        const result = await axios.get(`${TERM_API_URL}/${props.termId}`);
+        const result = await axios.get(`${TERM_API_URL}/${props.termId}`, safeHeaders);
         //setTermData(result.data);
         console.log(result.data);
         setTermData(result.data);
@@ -81,7 +80,7 @@ export default function TermDisplayComponent(props) {
       setIsExampleLoading(true);
 
         try {
-        const result = await axios.get(`${EXAMPLE_API_URL}/term/${props.termId}`);
+        const result = await axios.get(`${EXAMPLE_API_URL}/term/${props.termId}`, safeHeaders);
         //setTermData(result.data);
         console.log(result.data);
         setExamples(result.data);

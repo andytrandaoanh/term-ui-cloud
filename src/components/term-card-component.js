@@ -9,7 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import { Link as RouterLink } from 'react-router-dom';
 import axios from 'axios';
 import moment from 'moment';
-import { TERM_API_URL } from './api-config.js';
+import { TERM_API_URL, safeHeaders  } from './api-config.js';
 
 
 const useStyles = makeStyles({
@@ -40,7 +40,7 @@ export default function TermCards() {
       setIsLoading(true);
 
         try {
-        const result = await axios(TERM_API_URL);        
+        const result = await axios(TERM_API_URL, safeHeaders );        
         setTermData(result.data);
       } catch (error) {
         setIsError(true);

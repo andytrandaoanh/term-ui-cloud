@@ -1,6 +1,6 @@
 import React, { Fragment,  useState, useEffect } from 'react';
 import axios from 'axios';
-import { TERM_API_URL } from './api-config.js';
+import { TERM_API_URL, safeHeaders } from './api-config.js';
 import { Link as RouterLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -45,7 +45,7 @@ export default function TermSearchComponent (props) {
         console.log(SEARCH_URL_WITH_PARAMS);
 
 	      	try {
-	    		const result = await axios.get(SEARCH_URL_WITH_PARAMS);          
+	    		const result = await axios.get(SEARCH_URL_WITH_PARAMS, safeHeaders);          
           console.log(result);
           setTermData(result.data);
 

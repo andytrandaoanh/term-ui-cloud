@@ -7,7 +7,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
-import { TERM_API_URL } from './api-config';
+import { TERM_API_URL, safeHeaders } from './api-config';
 import { useHistory } from "react-router-dom";
 import Typography from '@material-ui/core/Typography';
 
@@ -95,7 +95,7 @@ export default function AddTermForm() {
     //ready to send to API using Axios
     //console.log(newTerm);
     try {
-      const resp = await axios.post(TERM_API_URL, newTerm);
+      const resp = await axios.post(TERM_API_URL, newTerm, safeHeaders );
       console.log(resp.data);
       setUpdateMessage('Data sucessfully written to the database!');
       //history.push(`/home`);

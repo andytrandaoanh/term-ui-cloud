@@ -7,7 +7,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
-import { TERM_API_URL, LANGUAGE_API_URL } from './api-config';
+import { TERM_API_URL, LANGUAGE_API_URL, safeHeaders } from './api-config';
 import Typography from '@material-ui/core/Typography';
 
 
@@ -49,7 +49,7 @@ export default function TermDeleteComponent(props) {
   const sendDeleteRequest = async () => {
 
     try {
-        const resp = await axios.delete(`${TERM_API_URL}/${props.termId}`);
+        const resp = await axios.delete(`${TERM_API_URL}/${props.termId}`, safeHeaders);
         console.log(resp.data);
     } catch (err) {
         // Handle Error Here
@@ -75,7 +75,7 @@ export default function TermDeleteComponent(props) {
       setDataLoading(true);
 
         try {
-        const result = await axios.get(`${TERM_API_URL}/${props.termId}`);
+        const result = await axios.get(`${TERM_API_URL}/${props.termId}`, safeHeaders);
         //setTermData(result.data);
         //console.log(result.data);
         setMainTerm(result.data.main_term);
@@ -101,7 +101,7 @@ export default function TermDeleteComponent(props) {
       setListLoading(true);
 
         try {
-        const result = await axios.get(`${LANGUAGE_API_URL}`);
+        const result = await axios.get(`${LANGUAGE_API_URL}`, safeHeaders);
         const langArray = [];
         result.data.forEach((lang)=>langArray.push({langID: lang.lang_id, shortName: lang.short_name}));
         //console.log(langArray);
