@@ -8,12 +8,17 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { Link as RouterLink } from 'react-router-dom';
 import axios from 'axios';
-import moment from 'moment';
 import { TERM_API_URL, safeHeaders  } from './api-config.js';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
-
-const useStyles = makeStyles({
-
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    '& > * + *': {
+      marginLeft: theme.spacing(2),
+    },
+    minWidth: 275,
+  },
   title: {
     fontSize: 14,
   },
@@ -24,7 +29,7 @@ const useStyles = makeStyles({
     margin: 5,
   },
 
-});
+}));
 
 export default function TermCards() {
   const classes = useStyles();
@@ -55,8 +60,13 @@ export default function TermCards() {
   }, []);  
 
   return (
+    <Fragment>
+    {isError && <div>Something went wrong when loading API data ...</div>}
+    {isLoading && <div className={classes.root}><CircularProgress /> </div>} 
+    
+
     <Grid container spacing={3}>
-        {termData.map(term => (
+        {termData ? termData.map(term => (
             <Grid key={term.term_id} xs={3}>
             <Card className={classes.termcard}>
             <CardContent>
@@ -75,7 +85,8 @@ export default function TermCards() {
             </CardActions>
           </Card>
         </Grid>
-        ))}
+        )) : null}
     </Grid>
+    </Fragment>
   );
 }
