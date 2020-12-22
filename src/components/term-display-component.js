@@ -82,7 +82,7 @@ export default function TermDisplayComponent(props) {
         try {
         const result = await axios.get(`${EXAMPLE_API_URL}/term/${props.termId}`, safeHeaders);
         //setTermData(result.data);
-        console.log(result.data);
+        //console.log(result.data);
         setExamples(result.data);
 
       } catch (error) {
@@ -97,12 +97,13 @@ export default function TermDisplayComponent(props) {
     
     fetchTermData();
     fetchExamples();
-  },[]);
+  },[props.termId]);
 
 
 
   return (
     <Fragment>
+     {isError && <div>Something went wrong when loading API data ...</div>} 
     {isExampleLoading || isTermLoading ? ( <div>Loading examples ...</div>) : (
       <Container maxWidth="md">
       <Grid container className={classes.root} spacing={2}>

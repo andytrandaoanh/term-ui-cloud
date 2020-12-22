@@ -119,7 +119,7 @@ export default function TermDeleteComponent(props) {
 
     fetchLangData();
     fetchTermData();
-  },[]);
+  },[props.termId]);
 
 
 

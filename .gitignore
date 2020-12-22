@@ -9,10 +9,8 @@
 # misc
 .env
 .eslintcache
-
-.firebase/
+.firebase
 .firebaserc
-.github/
 firebase.json
 
 

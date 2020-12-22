@@ -8,7 +8,6 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import { TERM_API_URL, safeHeaders } from './api-config';
-import { useHistory } from "react-router-dom";
 import Typography from '@material-ui/core/Typography';
 
 
@@ -59,7 +58,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AddTermForm() {
   const classes = useStyles();
-  const history = useHistory();
   const [mainLang, setMainLang] = useState(1);
   const [coLang, setCoLang] = useState(3);
   const [checked, setChecked] = useState(false);

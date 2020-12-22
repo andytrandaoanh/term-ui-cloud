@@ -136,7 +136,7 @@ export default function EditTermForm(props) {
 
     fetchLangData();
     fetchTermData();
-  },[]);
+  },[props.termId]);
 
 
 

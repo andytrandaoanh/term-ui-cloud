@@ -118,7 +118,7 @@ export default function ExampleEditComponent(props) {
 
     fetchLangData();
     fetchExampleData();
-  },[]);
+  },[props.egId]);
 
 
 
