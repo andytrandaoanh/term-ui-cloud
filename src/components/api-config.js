@@ -1,6 +1,7 @@
-
-const BASE_URL = process.env.REACT_APP_BASE_URL;
-const API_KEY = process.env.REACT_APP_API_KEY;
+/*FOR FIREBASE DEPLOYMENT*/
+import {FIREBASE_BASE_URL, FIREBASE_API_KEY} from '../firebase-config';
+const BASE_URL = FIREBASE_BASE_URL;
+const API_KEY = FIREBASE_API_KEY;
 
 export const safeHeaders = {headers: {
     'x-api-key': `${API_KEY}`

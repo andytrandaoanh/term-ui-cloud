@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 export default function TermCards() {
   const classes = useStyles();
   
-  const [termData, setTermData] = useState(null);
+  const [termData, setTermData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   
@@ -47,7 +47,7 @@ export default function TermCards() {
       try {
         const result = await axios(TERM_API_URL, safeHeaders );        
         setTermData(result.data);        
-        //console.log('termData', result.data);
+        //console.log('result', result);
         setIsLoading(false);
  
       } catch (error) {
@@ -68,8 +68,8 @@ export default function TermCards() {
     
 
     <Grid container spacing={3}>
-        {termData && termData.map(term => (
-            <Grid item key={term.term_id} xs={3}>
+        {termData && termData.length > 0  ?  termData.map(term => (
+            <Grid item key={term.term_id} item xs={12} sm={6} md={3}>
             <Card className={classes.termcard}>
             <CardContent>
               <Typography className={classes.title} color="textSecondary" gutterBottom>
@@ -87,7 +87,7 @@ export default function TermCards() {
             </CardActions>
           </Card>
         </Grid>
-        ))}
+        )) : null}
     </Grid>
     
     </Fragment>
