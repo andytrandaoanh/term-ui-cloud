@@ -33,21 +33,22 @@ export default function DenseTable() {
       setIsError(false);
       setIsLoading(true);
 
-        try {
+      try {
         const result = await axios.get(TERM_API_URL, safeHeaders);
         setTermData(result.data);
+
       } catch (error) {
         setIsError(true);
         console.log('error:', error);
       }
 
       setIsLoading(false);
-      console.log(termData);
+      //console.log(termData);
  
     };
  
     fetchData();
-  }, [termData]);  
+  }, []);  
 
 
   return (

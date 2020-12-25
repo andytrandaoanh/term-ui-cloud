@@ -60,18 +60,19 @@ export default function TermDisplayComponent(props) {
      
       setIsTermLoading(true);
 
-        try {
+      try {
         const result = await axios.get(`${TERM_API_URL}/${props.termId}`, safeHeaders);
         //setTermData(result.data);
-        console.log(result.data);
+        //console.log(result.data);
+        //console.log(`${TERM_API_URL}/${props.termId}`);
         setTermData(result.data);
+        setIsTermLoading(false);
 
       } catch (error) {
+        //console.log('error', error);
+        
         setIsError(true);
       }
-
-      setIsTermLoading(false);
-      //console.log({'photo data': photoData});
  
     };
 
@@ -81,12 +82,16 @@ export default function TermDisplayComponent(props) {
 
         try {
         const result = await axios.get(`${EXAMPLE_API_URL}/term/${props.termId}`, safeHeaders);
-        //setTermData(result.data);
-        //console.log(result.data);
+        
+        //console.log('url', `${EXAMPLE_API_URL}/term/${props.termId}`);
         setExamples(result.data);
 
       } catch (error) {
-        setIsError(true);
+
+        //console.log('error', error);
+        
+        console.log("examples not found or error loading them");
+        
       }
 
       setIsExampleLoading(false);
@@ -97,7 +102,7 @@ export default function TermDisplayComponent(props) {
     
     fetchTermData();
     fetchExamples();
-  },[props.termId]);
+  },[]);
 
 
 
@@ -129,7 +134,7 @@ export default function TermDisplayComponent(props) {
 
 
         </Grid>        
-        <Grid item xs={6}>
+        <Grid item xs={12} sm={12} md={6}>
        <Typography variant="overline" display="block" gutterBottom>
         Main Term ({termData.main_lang})
       </Typography>
@@ -137,7 +142,7 @@ export default function TermDisplayComponent(props) {
       {termData.main_term}
       </Typography>
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={12} sm={12} md={6}>
       <Typography variant="overline" display="block" gutterBottom>
       Corrensponding Term  ({termData.co_lang})
       </Typography>    
@@ -153,7 +158,7 @@ export default function TermDisplayComponent(props) {
       </Grid>
 
 
-        {examples.map(item => (
+        {examples && examples.map(item => (
           
           <div className={classes.exampleWrap}>
 

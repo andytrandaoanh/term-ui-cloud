@@ -47,7 +47,7 @@ export default function TermCards() {
       try {
         const result = await axios(TERM_API_URL, safeHeaders );        
         setTermData(result.data);        
-        console.log('result', result);
+        //console.log('result', result);
         setIsLoading(false);
  
       } catch (error) {
@@ -69,7 +69,7 @@ export default function TermCards() {
 
     <Grid container spacing={3}>
         {termData && termData.length > 0  ?  termData.map(term => (
-            <Grid item key={term.term_id} xs={1}>
+            <Grid item key={term.term_id} item xs={12} sm={6} md={3}>
             <Card className={classes.termcard}>
             <CardContent>
               <Typography className={classes.title} color="textSecondary" gutterBottom>

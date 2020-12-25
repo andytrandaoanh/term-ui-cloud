@@ -139,9 +139,7 @@ export default function EditTermForm(props) {
     <CssBaseline />
     <Container maxWidth="sm">
     <Box className={classes.formBox}>
-        <Typography variant="h5" component="h5">
-            Adding Example
-        </Typography>
+
 
         <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit}>
 
@@ -185,29 +183,30 @@ export default function EditTermForm(props) {
           </TextField>
         </FormControl>
    
-        <FormControl>
-          <TextField  
-          id= "eg_source" 
-          label="Source"
-          defaultValue={egSource} 
-          onChange={(event)=>setEgSource(event.target.value)}
-          
-        />
-        </FormControl>  
+
 
         <TextField
           id="example-body"
           label="Example"
           multiline
           fullWidth
-          rowsMax={4}
+          rowsMax={8}
           value={egBody}
           onChange={(event)=>setEgBody(event.target.value)}
         />
 
 
 
-
+        <FormControl>
+          <TextField  
+          id= "eg_source" 
+          label="Source"
+          fullWidth
+          defaultValue={egSource} 
+          onChange={(event)=>setEgSource(event.target.value)}
+          
+        />
+        </FormControl>  
 
     
         <div>

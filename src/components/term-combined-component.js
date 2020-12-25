@@ -3,38 +3,27 @@ import axios from 'axios';
 import { TERM_API_URL, safeHeaders  } from './api-config.js';
 import { Link as RouterLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import Alert from '@material-ui/lab/Alert';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
+import SlideshowIcon from '@material-ui/icons/Slideshow';
 
 
-const useStyles = makeStyles({
-
-  title: {
-    fontSize: 14,
-  },
-  pos: {
-    marginBottom: 12,
-  },
-  termcard: {
-    margin: 5,
-  },
-
-  itemLink:{
-    marginRight: 5,
-  },
-
-  orderList: {
-     columns: '2 auto',
+const useStyles = makeStyles((theme) =>({
+  
+  root: {
+    flexGrow: 1,
   },
   
-  itemType:{
-    marginLeft: 5,
-    color: 'gray',
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
   },
 
 
-});
+}));
 
 
 
@@ -43,7 +32,7 @@ export default function TermSearchComponent (props) {
 	const classes = useStyles();
 	const [termData, setTermData] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
-		const [isError, setIsError] = useState(false);
+	const [isError, setIsError] = useState(false);
 
 	useEffect(() => {
 	   	const fetchData = async () => {
@@ -70,7 +59,7 @@ export default function TermSearchComponent (props) {
 	    };
 	 
 	    fetchData();
-	  }, [props]);
+	  }, [props.langId]);
 
 	return (
     <Fragment>
@@ -81,24 +70,28 @@ export default function TermSearchComponent (props) {
     {!isError && !isLoading && (
     <div className={classes.root}>
 
-      <ul className={classes.orderList}>    
+      <Grid container spacing={3}>   
         {termData.map((term) => (
-        <li key={term.term_id}>
-           
+        <Grid item xs={12} sm={6} md={4} key={term.term_id}>
+          <Paper className={classes.paper}>
 
-          <Link className={classes.itemLink} component={RouterLink} to={`/terms/display/${term.term_id}`} target="_blank">
-          {props.langId === 'vi' ? term.term_vi : term.term_en }
-          </Link>
-          {props.langId === 'vi' ? term.term_en : term.term_vi }
+            <Typography variant="h5" gutterBottom color="primary">
+              {props.langId === 'vi' ? term.term_vi : term.term_en }
+            </Typography>
           
-            <Typography className={classes.itemType} variant="caption" display="inline" gutterBottom>
-            ({term.type})
+            <Typography variant="h6" gutterBottom display="inline">
+            {props.langId === 'vi' ? term.term_en : term.term_vi }
             </Typography>
 
-        </li>
+            <IconButton aria-label="show" size="small" component={RouterLink} to={`/terms/display/${term.term_id}`}>
+              <SlideshowIcon fontSize="small"  />
+            </IconButton>
+
+          </Paper>
+        </Grid>
         ))}
 
-      </ul>
+      </Grid>
 
     </div>
     )}
