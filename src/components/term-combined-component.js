@@ -51,11 +51,11 @@ export default function TermSearchComponent (props) {
 	  		setIsLoading(true);
         const SEARCH_URL_WITH_PARAMS = `${TERM_API_URL}/combined/${props.langId}`;
 
-        console.log(SEARCH_URL_WITH_PARAMS);
+        //console.log(SEARCH_URL_WITH_PARAMS);
 
 	      	try {
 	    		const result = await axios.get(SEARCH_URL_WITH_PARAMS, safeHeaders );          
-          console.log(result);
+          //console.log(result);
           setTermData(result.data);
 
 

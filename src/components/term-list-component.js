@@ -47,7 +47,7 @@ export default function DenseTable() {
     };
  
     fetchData();
-  }, [termData]);  
+  }, []);  
 
 
   return (

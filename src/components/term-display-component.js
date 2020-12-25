@@ -63,7 +63,7 @@ export default function TermDisplayComponent(props) {
         try {
         const result = await axios.get(`${TERM_API_URL}/${props.termId}`, safeHeaders);
         //setTermData(result.data);
-        console.log(result.data);
+        //console.log(result.data);
         setTermData(result.data);
 
       } catch (error) {
@@ -155,7 +155,7 @@ export default function TermDisplayComponent(props) {
 
         {examples.map(item => (
           
-          <div className={classes.exampleWrap}>
+          <div key={item.eg_id} className={classes.exampleWrap}>
 
           <Grid item xs={12} key={`container${item.eg_id}`} >
             <Typography variant="subtitle1" gutterBottom>

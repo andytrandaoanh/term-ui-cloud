@@ -136,23 +136,23 @@ export default function TopAppBar() {
       <List>
 
 
-      <ListItem button key="menu-item-home" component={RouterLink} to="/terms/combinedlist/vi">
+      <ListItem button key="menu-item-combined-vn" component={RouterLink} to="/terms/combinedlist/vi">
             <ListItemIcon><ListAltIcon /></ListItemIcon>
             <ListItemText primary="Combined Vietnamese" />
         </ListItem>        
 
-        <ListItem button key="menu-item-home" component={RouterLink} to="/terms/combinedlist/en">
+        <ListItem button key="menu-item-combined-en" component={RouterLink} to="/terms/combinedlist/en">
             <ListItemIcon><ListAltIcon /></ListItemIcon>
             <ListItemText primary="Combined English" />
         </ListItem>     
 
-        <ListItem button key="menu-item-home" component={RouterLink} to="/terms/orderlist/en">
+        <ListItem button key="menu-item-pure-en" component={RouterLink} to="/terms/orderlist/en">
             <ListItemIcon><FormatListBulletedIcon /></ListItemIcon>
             <ListItemText primary="Pure English Terms" />
         </ListItem>
 
         
-        <ListItem button key="menu-item-home" component={RouterLink} to="/terms/orderlist/vi">
+        <ListItem button key="menu-item-pure-vn" component={RouterLink} to="/terms/orderlist/vi">
             <ListItemIcon><FormatListBulletedIcon /></ListItemIcon>
             <ListItemText primary="Pure Vietnamese" />
         </ListItem>
