@@ -7,7 +7,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
-import { TERM_API_URL, LANGUAGE_API_URL, safeHeaders } from './api-config';
+import { TERM_API_URL, LANGUAGE_API_URL, safeHeaders, writeHeaders } from './api-config';
 import Typography from '@material-ui/core/Typography';
 import { useHistory } from "react-router-dom";
 
@@ -62,13 +62,22 @@ export default function EditTermForm(props) {
 
 
     try {
-        const resp = await axios.put(`${TERM_API_URL}/${props.termId}`, newTerm, safeHeaders);
+        const resp = await axios.put(`${TERM_API_URL}/${props.termId}`, newTerm, writeHeaders);
         console.log(resp.data);
         history.push(`/terms/display/${props.termId}`);
     } catch (err) {
-        // Handle Error Here
-        console.error(err);
-        setUpdateMessage('Error encountered while writing to the database!');
+      console.log(err);
+      
+      if(err.response.status === 400){
+        
+        setUpdateMessage('Your session is expired. Please log in again');
+      } 
+
+      if(err.response.status === 401){
+        
+        setUpdateMessage('You are not allowed to modify data');
+      } 
+     
     }
   };
 

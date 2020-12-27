@@ -11,15 +11,19 @@ import TermOrderListPage from '../pages/term-orderlist-page';
 import ExampleAddPage from '../pages/example-add-page';
 import ExampleEditPage from '../pages/example-edit-page';
 import ExampleDeletePage from '../pages/example-delete-page';
-import AdminLoginPage from '../pages/admin-login-page';
 import EditorLoginPage from '../pages/editor-login-page';
+import AdministrationPage from '../pages/administration-page';
+import UserProfilePage from '../pages/user-profile-page';
+
+
 
 export default function RoutingComponent()  {
     
     return (
       <Switch>
 
-        <Route path="/adminlogin" component={AdminLoginPage} />
+      
+        <Route path="/administrationpage" component={AdministrationPage} />
         <Route path="/editorlogin" component={EditorLoginPage} />
         <Route path="/examples/add/:id" component={ExampleAddPage} />
         <Route path="/examples/edit/:id" component={ExampleEditPage} />
@@ -32,6 +36,7 @@ export default function RoutingComponent()  {
         <Route path="/terms/list" component={TermListPage} />
         <Route path="/terms/orderlist/:query" component={TermOrderListPage} />
         <Route path="/terms/search/:query" component={TermSearchPage} />
+        <Route path="/userprofile" component={UserProfilePage} />
         <Route path="/" component={HomePage} />
         
       </Switch>

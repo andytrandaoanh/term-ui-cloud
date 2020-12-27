@@ -5,7 +5,7 @@ import FormControl from '@material-ui/core/FormControl';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
-import { LANGUAGE_API_URL, EXAMPLE_API_URL, safeHeaders } from './api-config';
+import { LANGUAGE_API_URL, EXAMPLE_API_URL, safeHeaders, writeHeaders } from './api-config';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -38,23 +38,27 @@ export default function ExampleEditComponent(props) {
 
 
   
-
   const sendPutRequest = async () => {
-
-
 
 
 
     try {
 
-        const resp = await axios.put(`${EXAMPLE_API_URL}/${props.egId}`, example, safeHeaders );
+        const resp = await axios.put(`${EXAMPLE_API_URL}/${props.egId}`, example, writeHeaders );
         console.log(resp.data);
         history.push(`/terms/display/${example.term_id}`);
 
     } catch (err) {
-        // Handle Error Here
-        console.error(err);
-        setUpdateMessage('Error encountered while writing to the database!');
+      
+      if(err.response.status === 400){
+        
+        setUpdateMessage('Your session is expired. Please log in again');
+      } 
+
+      if(err.response.status === 401){
+        
+        setUpdateMessage('You are not allowed to modify data');
+      } 
     }
   };
 

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { useHistory } from "react-router-dom";
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -8,7 +8,6 @@ import InputBase from '@material-ui/core/InputBase';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
-import Button from '@material-ui/core/Button';
 import { Link as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
 import Drawer from '@material-ui/core/Drawer';
@@ -20,7 +19,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import HomeIcon from '@material-ui/icons/Home';
 import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import ListAltIcon from '@material-ui/icons/ListAlt';
-
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -95,7 +96,21 @@ export default function TopAppBar() {
   const history = useHistory();
   const [searchString, setSearchString] = useState(null);
   const [showMenu, setShowMenu] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isEditor, setIsEditor] = useState(false);
+  const [userLogin, setUserLogin] = useState(false);
 
+
+
+  useEffect(() => {
+    const admin = localStorage.getItem('admin');
+    if (admin === '1') setIsAdmin(true);
+    const editor = localStorage.getItem('editor');
+    if (editor === '1') setIsEditor(true);
+    const status = localStorage.getItem('status');
+    if (status === 'login') setUserLogin(true);
+   
+  }, []);  
 
 
 
@@ -157,10 +172,22 @@ export default function TopAppBar() {
             <ListItemText primary="Pure Vietnamese" />
         </ListItem>
 
+        <Divider />
 
 
-   
-
+        <ListItem button key="menu-item-user-login" component={RouterLink} to="/editorlogin">
+            <ListItemIcon><FormatListBulletedIcon /></ListItemIcon>
+            <ListItemText primary="Editor Login" />
+        </ListItem>
+        
+        {isAdmin  &&<Divider />}
+        {isAdmin  &&
+        <ListItem button key="menu-item-admin" component={RouterLink} to="/administrationpage">
+            <ListItemIcon><FormatListBulletedIcon /></ListItemIcon>
+            <ListItemText primary="Admin Page" />
+        </ListItem>
+        
+        }
 
       </List>
     </div>
@@ -203,8 +230,46 @@ export default function TopAppBar() {
               
             />
           </div>
-          <Button color="inherit" component={RouterLink} to="/terms/add">Add</Button>
-          <Button color="inherit" component={RouterLink} to="/terms/list">List</Button>
+          {isEditor && 
+          <div>
+          <Tooltip title="Add New Term">
+          <IconButton
+              aria-label="add new term"
+              color="inherit"
+              component={RouterLink} 
+              to="/terms/add"
+            >
+              <AddCircleOutlineIcon />
+            </IconButton>
+          </Tooltip>
+          
+          <Tooltip title="List Terms">
+          <IconButton
+              aria-label="list terms"
+              color="inherit"
+              component={RouterLink} 
+              to="/terms/list"
+            >
+              <FormatListBulletedIcon />
+            </IconButton>
+          </Tooltip>
+
+          </div>}
+
+          {userLogin &&
+
+          <Tooltip title="Change Password">
+          <IconButton
+              edge="end"
+              aria-label="account of current user"
+              color="inherit"
+              component={RouterLink} 
+              to="/userprofile"
+            >
+              <AccountCircle />
+            </IconButton>
+          </Tooltip>
+          }
         </Toolbar>
         <Drawer anchor="left" open={showMenu} onClose = {()=>setShowMenu(false)}>
             {listMenuItems("left")}

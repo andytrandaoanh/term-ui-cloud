@@ -15,6 +15,8 @@ import HomeIcon from '@material-ui/icons/Home';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import Divider from '@material-ui/core/Divider';
 
+
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -52,22 +54,24 @@ export default function TermDisplayComponent(props) {
   const [isError, setIsError] = useState(false);
   const [isExampleLoading, setIsExampleLoading] = useState(false);
   const [isTermLoading, setIsTermLoading] = useState(false);
+  const [isEditor, setIsEditor] = useState(false);
 
   
 
   useEffect(() => {
+
+
+    const editor = localStorage.getItem('editor');
+    if (editor === '1') setIsEditor(true);
+
+
     const fetchTermData = async () => {
      
       setIsTermLoading(true);
 
       try {
         const result = await axios.get(`${TERM_API_URL}/${props.termId}`, safeHeaders);
-        //setTermData(result.data);
-        //console.log(result.data);
-<<<<<<< HEAD
-=======
-        //console.log(`${TERM_API_URL}/${props.termId}`);
->>>>>>> 512e123810677869b99ad519575706e2271afea3
+
         setTermData(result.data);
         setIsTermLoading(false);
 
@@ -105,7 +109,7 @@ export default function TermDisplayComponent(props) {
     
     fetchTermData();
     fetchExamples();
-  },[]);
+  },[props.termId]);
 
 
 
@@ -115,6 +119,7 @@ export default function TermDisplayComponent(props) {
     {isExampleLoading || isTermLoading ? ( <div>Loading examples ...</div>) : (
       <Container maxWidth="md">
       <Grid container className={classes.root} spacing={2}>
+        {isEditor && 
         <Grid item xs={12} >
 
           <Button  
@@ -136,7 +141,8 @@ export default function TermDisplayComponent(props) {
           </Button>
 
 
-        </Grid>        
+        </Grid>  
+        }      
         <Grid item xs={12} sm={12} md={6}>
        <Typography variant="overline" display="block" gutterBottom>
         Main Term ({termData.main_lang})
@@ -179,6 +185,7 @@ export default function TermDisplayComponent(props) {
             </Box>
 
             </Typography>
+            {isEditor &&
             <div className={classes.buttonWrap}>
             <IconButton aria-label="delete" 
             className={classes.margin}
@@ -193,6 +200,7 @@ export default function TermDisplayComponent(props) {
               <DeleteIcon fontSize="small" />
             </IconButton>           
             </div>
+            }
           </Grid>
 
 
