@@ -11,16 +11,16 @@ export default function AdministrationComponent() {
     return (
       <Tabs>
       <TabList>
-        <Tab>Maintain Users</Tab>
         <Tab>Add User</Tab>
+        <Tab>Maintain Users</Tab>        
         <Tab>Reset User Password</Tab>
       </TabList>
-  
-      <TabPanel>
-        <AdminUserList />
-      </TabPanel>
+
       <TabPanel>
         <UserAddComponent />
+      </TabPanel>
+      <TabPanel>
+        <AdminUserList />
       </TabPanel>
       <TabPanel>
         <UserResetPassword />

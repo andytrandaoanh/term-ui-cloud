@@ -33,9 +33,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function UserAddComponent() {
   const classes = useStyles();
-  const [userName, setUserName] = useState(['']);
-  const [userFullName, setUserFullName] = useState(['']);
-  const [password, setPassword] = useState(['']);
+  const [userName, setUserName] = useState('');
+  const [userFullName, setUserFullName] = useState('');
+  const [password, setPassword] = useState('1234');
   const [editor, setEditor] = useState(false);
   const [admin, setAdmin] = useState(false);
   const [message, setMessage] = useState(null);
@@ -51,15 +51,25 @@ export default function UserAddComponent() {
         //history.push(`/home`);
   
       } catch (err) {
-        if(err.response.status === 400){
-          setError(true);
-          setMessage('Your session is expired. Please log in again');
-        } 
+        if (err.response) {
+          if(err.response.status === 400){
+            setError(true);
+            setMessage('Your session is expired. Please log in again');
+          } 
+  
+          if(err.response.status === 401){
+            setError(true);
+            setMessage('You are not allowed to add users');
+          } 
+  
+        }
 
-        if(err.response.status === 401){
+        else {
           setError(true);
-          setMessage('You are not allowed to add users');
-        } 
+          setMessage('API error encountered.');
+          console.log(err);
+
+        }
        
       }
 
@@ -74,6 +84,7 @@ export default function UserAddComponent() {
           editor: editor ? 1 : 0,
           admin: admin ? 1 : 0,
       }
+      //console.log('data to send', data)
       sendPostRequest(data);
 
   }
@@ -95,6 +106,12 @@ export default function UserAddComponent() {
             onChange={(event)=>setUserFullName(event.target.value)}
         />
 
+      <TextField 
+            id="password" 
+            label="password" 
+            value={password}
+            onChange={(event)=>setPassword(event.target.value)}
+        />
         <FormControlLabel
           control={
           <Checkbox
@@ -116,12 +133,6 @@ export default function UserAddComponent() {
          />
             }
             label="Admin"
-        />
-      <TextField 
-            id="password" 
-            label="password" 
-            value={password}
-            onChange={(event)=>setPassword(event.target.value)}
         />
 
         <Button
