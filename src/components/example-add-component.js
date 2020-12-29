@@ -7,20 +7,25 @@ import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import { TERM_API_URL, LANGUAGE_API_URL, EXAMPLE_API_URL, safeHeaders, writeHeaders } from './api-config';
 import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import { useHistory } from "react-router-dom";
+import Grid from '@material-ui/core/Grid';
+
+
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    flexGrow: 1,
     '& > *': {
       margin: theme.spacing(1),
     }
   },
-  formBox: {
-      width: '80%',
-      textAlign: "center"
+ 
+  centerBox: {
+    width: '100%',
+    textAlign: 'center',
   }
 }));
 
@@ -145,33 +150,32 @@ export default function EditTermForm(props) {
     {listLoading || dataLoading ? ( <div>Loading ...</div>) : (
     <div>    
     <CssBaseline />
-    <Container maxWidth="sm">
-    <Box className={classes.formBox}>
+    <Container maxWidth="md">
+    <Grid container className={classes.root} spacing={2}>
 
-
-        <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit}>
-
-        <FormControl>
+      <Grid item xs={12}  >
           <TextField
             disabled  
             id= "main-term" 
             label="Main Term" 
+            fullWidth
             defaultValue={termData.main_term}  
             
           />
-        </FormControl>  
+      </Grid>
 
-        <FormControl>
+      <Grid item xs={12}  >
           <TextField  
           disabled
+          fullWidth
           id= "co-term" 
           label="Corresponding Term"
           defaultValue={termData.co_term} 
           
         />
-        </FormControl>  
+        </Grid>  
 
-        <FormControl>
+        <Grid item xs={12}  >
           <TextField 
             id="eg-lang-select"
             select
@@ -189,10 +193,10 @@ export default function EditTermForm(props) {
             ))}  
             
           </TextField>
-        </FormControl>
+        </Grid>
    
 
-
+        <Grid item xs={12}  >
         <TextField
           id="example-body"
           label="Example"
@@ -203,9 +207,9 @@ export default function EditTermForm(props) {
           onChange={(event)=>setEgBody(event.target.value)}
         />
 
+        </Grid>
 
-
-        <FormControl>
+        <Grid item xs={12}  >
           <TextField  
           id= "eg_source" 
           label="Source"
@@ -214,18 +218,24 @@ export default function EditTermForm(props) {
           onChange={(event)=>setEgSource(event.target.value)}
           
         />
-        </FormControl>  
+        </Grid>  
 
     
-        <div>
-        <Button variant="contained" color="primary" type="submit">
-          Submit
+        <div className={classes.centerBox}>
+          <Button 
+            variant="contained" 
+            color="primary" 
+            onClick={(event)=>handleSubmit(event)}
+          >
+            Submit
         </Button>
         </div>
-        </form>
-        <div><Typography variant="caption" display="block" gutterBottom>{updateMessage}</Typography></div>
+        
+        <div className={classes.centerBox}>
+          <Typography variant="caption" display="block" gutterBottom>{updateMessage}</Typography>
+        </div>
 
-    </Box>
+    </Grid>
     </Container>
     </div>
     )}

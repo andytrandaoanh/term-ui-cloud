@@ -1,7 +1,6 @@
-import React, { useState} from 'react';
+import React, { useState, Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -9,10 +8,16 @@ import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import { TERM_API_URL, writeHeaders } from './api-config';
 import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Container from '@material-ui/core/Container';
 
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    
+    flexGrow: 1,
+
     '& > *': {
       margin: theme.spacing(1),
     },
@@ -32,17 +37,6 @@ const useStyles = makeStyles((theme) => ({
   },
   textControl: {
     width: '50ch',
-  },
-  formWrap: {
-    padding: 10,
-    textAlign: 'left',
-  },
-
-  formContainer: {
-    margin: 'auto',
-    width: '70%',
-    height: 400,
-    textAlign: 'center',
   },
   
   submitWrap: {
@@ -120,21 +114,22 @@ export default function AddTermForm() {
 
 
   return (
-    <div className={classes.formContainer}>
-    <div className={classes.formWrap}>
-
-        <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit}>
-
-        <FormControl  className={classes.formControl}>
-          <TextField 
-            className={classes.textControl} 
+    <Fragment>    
+    <CssBaseline />
+    <Container maxWidth="md">
+      <Grid container className={classes.root} spacing={2}>
+      <Grid item xs={12} sm={8} >
+        
+          <TextField             
             id= "main-term" 
             label="Main Term" 
+            fullWidth
             onChange={(event)=>setMainTerm(event.target.value)}
           />
-        </FormControl>  
-
-        <FormControl className={classes.formControl}>
+       
+      </Grid>
+      <Grid item xs={12} sm={2}>
+      
           <TextField 
             id="main-lang-select"
             select
@@ -152,17 +147,18 @@ export default function AddTermForm() {
             ))}  
             
           </TextField>
-        </FormControl>
+        
+      </Grid>
 
-        <FormControl  className={classes.formControl}>
+      <Grid item item xs={12} sm={8} >  
           <TextField  
-          className={classes.textControl} 
+          fullWidth
           id= "co-term" label="Corresponding Term"
           onChange={(event)=>setCoTerm(event.target.value)}
         />
-        </FormControl>  
+      </Grid>  
 
-        <FormControl>
+      <Grid item xs={12} sm={2}> 
           <TextField 
             id="co-lang-select"
             select
@@ -180,17 +176,17 @@ export default function AddTermForm() {
             ))}  
             
           </TextField>
-        </FormControl>
+        </Grid>
 
-        <FormControl className={classes.formControl}>
+        <Grid item item item xs={12} sm={8} > 
           <TextField  
           className={classes.textControl} 
           id= "tags" label="Tags"
           onChange={(event)=>setTags(event.target.value)}
            />
-        </FormControl>
+        </Grid>
 
-        <FormControl className={classes.checkControl}>
+        <Grid item xs={12} sm={2} > 
           <FormControlLabel
             control={
               <Checkbox
@@ -202,19 +198,18 @@ export default function AddTermForm() {
             }
             label="Disabled"
           />
-        </FormControl>
+        </Grid>
         <div className={classes.submitWrap}>
         <div><Typography variant="caption" display="block" gutterBottom>{updateMessage}</Typography></div>
-        <Button variant="contained" color="primary" type="submit">
+        <Button variant="contained" color="primary" onClick={(event)=>handleSubmit(event)}>
           Submit
         </Button>
         
         </div>
-        </form>
         
-
-    </div>
+        </Grid>
+    </Container>
     
-    </div>
+    </Fragment>
   );
 }

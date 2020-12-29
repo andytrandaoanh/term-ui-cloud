@@ -7,19 +7,22 @@ import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import { LANGUAGE_API_URL, EXAMPLE_API_URL, safeHeaders, writeHeaders } from './api-config';
 import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import { useHistory } from "react-router-dom";
+import Grid from '@material-ui/core/Grid';
+
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    flexGrow: 1,
     '& > *': {
       margin: theme.spacing(1),
     }
   },
-  formBox: {
-      width: '80%',
+  centerBox: {
+      width: '100%',
       textAlign: "center"
   }
 }));
@@ -136,16 +139,10 @@ export default function ExampleEditComponent(props) {
     {listLoading || dataLoading ? ( <div>Loading ...</div>) : (
     <div>    
     <CssBaseline />
-    <Container maxWidth="sm">
-    <Box className={classes.formBox}>
-        <Typography variant="h5" component="h5">
-            Edit Example
-        </Typography>
-
-        <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit}>
-
-
-        <FormControl>
+    <Container maxWidth="md">
+    <Grid container className={classes.root} spacing={2}>
+    <Grid item xs={12} >
+        
           <TextField 
             id="lang_id"
             name="lang_id"
@@ -164,8 +161,9 @@ export default function ExampleEditComponent(props) {
             ))}  
             
           </TextField>
-        </FormControl>
+      </Grid>
    
+      <Grid item xs={12} >
 
         <TextField
           id="eg_body"
@@ -173,7 +171,7 @@ export default function ExampleEditComponent(props) {
           label="Example"
           multiline
           fullWidth
-          rowsMax={4}
+          rowsMax={8}
           value={example.eg_body}
           onChange={handleChange}
         />
@@ -188,16 +186,23 @@ export default function ExampleEditComponent(props) {
           value={example.eg_source}
           onChange={handleChange}
         />
-  
-        <div>
-        <Button variant="contained" color="primary" type="submit">
+        
+        </Grid>
+        <div className={classes.centerBox}>
+        <Button 
+          variant="contained" color="primary" 
+          onClick = {(event)=>handleSubmit(event)}
+        
+        >
           Submit
         </Button>
         </div>
-        </form>
-        <div><Typography variant="caption" display="block" gutterBottom>{updateMessage}</Typography></div>
+        
+        <div className={classes.centerBox}>
+          <Typography variant="caption" display="block" gutterBottom>{updateMessage}</Typography>
+        </div>
 
-    </Box>
+    </Grid>
     </Container>
     </div>
     )}

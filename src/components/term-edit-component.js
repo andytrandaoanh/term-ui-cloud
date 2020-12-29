@@ -10,21 +10,29 @@ import axios from 'axios';
 import { TERM_API_URL, LANGUAGE_API_URL, safeHeaders, writeHeaders } from './api-config';
 import Typography from '@material-ui/core/Typography';
 import { useHistory } from "react-router-dom";
+import Grid from '@material-ui/core/Grid';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Container from '@material-ui/core/Container';
 
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    
+    flexGrow: 1,
+
     '& > *': {
       margin: theme.spacing(1),
       width: 200,
     },
-    '& .MuiTextField-root': {
-      margin: theme.spacing(1),
-      width: '25ch',
-    },  
-    checkControl: {
-      marginTop: 25,            
-    },        
+        
+  },
+
+  checkControl: {
+    marginTop: 25,            
+  },
+
+  centerBox: {
+    textAlign: 'center',
   }
 }));
 
@@ -153,92 +161,107 @@ export default function EditTermForm(props) {
     <Fragment>
     {isError && <div>Something went wrong when loading API data ...</div>}
     {listLoading || dataLoading ? ( <div>Loading ...</div>) : (
+    <div>
+    <CssBaseline />
+    <Container maxWidth="md">
+    <Grid container className={classes.root} spacing={2}>
+      <Grid item xs={12} sm={8} >  
 
-    <div className='form-container-center'>
+            <TextField  
+              id= "main-term" label="Main Term" 
+              fullWidth
+              defaultValue={mainTerm}  
+              onChange={(event)=>setMainTerm(event.target.value)}
+            />
+      </Grid>
 
-        <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit}>
+      <Grid item xs={12} sm={2}>
+            <TextField 
+              id="main-lang-select"
+              select
+              label="Select"
+              value={mainLang}
+              onChange={(event)=>setMainLang(event.target.value)}
+              helperText="Language"
+              SelectProps={{className: classes.selectControl}}
+            >
+              
+              {languages.map(language =>(
+                <MenuItem key={`main-lang-${language.langID}`} value={language.langID}>
+                    {language.shortName}
+                </MenuItem>   
+              ))}  
+              
+            </TextField>
+      </Grid>
 
-        <FormControl  className={classes.formControlText}>
-          <TextField  id= "main-term" label="Main Term" 
-            defaultValue={mainTerm}  
-            onChange={(event)=>setMainTerm(event.target.value)}
+      <Grid item xs={12} sm={8} >  
+
+            <TextField  
+              id= "co-term" 
+              label="Corresponding Term"
+              fullWidth
+              defaultValue={coTerm} 
+              onChange={(event)=>setCoTerm(event.target.value)}
           />
-        </FormControl>  
+      </Grid> 
 
-        <FormControl className={classes.formControlSelect}>
-          <TextField 
-            id="main-lang-select"
-            select
-            label="Select"
-            value={mainLang}
-            onChange={(event)=>setMainLang(event.target.value)}
-            helperText="Language"
-            SelectProps={{className: classes.selectControl}}
-          >
-            
-            {languages.map(language =>(
-              <MenuItem key={`main-lang-${language.langID}`} value={language.langID}>
-                  {language.shortName}
-              </MenuItem>   
-            ))}  
-            
-          </TextField>
-        </FormControl>
+      <Grid item xs={12} sm={2} >                
+          
+            <TextField 
+              id="co-lang-select"
+              select
+              label="Select"
+              value={coLang}
+              onChange={(event)=>setCoLang(event.target.value)}
+              helperText="Language"
+              SelectProps={{className: classes.selectControl}}
+            >
+              
+              {languages.map(language =>(
+                <MenuItem key={`co-lang-${language.langID}`} value={language.langID}>
+                    {language.shortName}
+                </MenuItem>   
+              ))}  
+              
+            </TextField>
+      </Grid>
 
-        <FormControl  className={classes.formControlText}>
-          <TextField  id= "co-term" label="Corresponding Term"
-           defaultValue={coTerm} 
-          onChange={(event)=>setCoTerm(event.target.value)}
-        />
-        </FormControl>  
+      <Grid item xs={12} sm={8} >  
+          
+            <TextField  
+              id= "tags" label="Tags"
+              fullWidth
+              defaultValue={tags}  
+              onChange={(event)=>setTags(event.target.value)}
+            />
+      </Grid>
+      
+      <Grid item xs={12} sm={2} >  
+          
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={checked}
+                  onChange={(event)=>setChecked(event.target.checked)}
+                  name="status"
+                  color="secondary"
+                />
+              }
+              label="Disabled"
+            />
+      </Grid>
 
-        <FormControl className={classes.formControlSelect}>
-          <TextField 
-            id="co-lang-select"
-            select
-            label="Select"
-            value={coLang}
-            onChange={(event)=>setCoLang(event.target.value)}
-            helperText="Language"
-            SelectProps={{className: classes.selectControl}}
-          >
-            
-            {languages.map(language =>(
-              <MenuItem key={`co-lang-${language.langID}`} value={language.langID}>
-                  {language.shortName}
-              </MenuItem>   
-            ))}  
-            
-          </TextField>
-        </FormControl>
-
-        <FormControl className={classes.formControlText}>
-          <TextField  id= "tags" label="Tags"
-          defaultValue={tags}  
-          onChange={(event)=>setTags(event.target.value)}
-           />
-        </FormControl>
-
-        <FormControl className={classes.checkControl}>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={checked}
-                onChange={(event)=>setChecked(event.target.checked)}
-                name="status"
-                color="secondary"
-              />
-            }
-            label="Disabled"
-          />
-        </FormControl>
-    
-        <Button variant="contained" color="primary" type="submit">
-          Submit
-        </Button>
-        </form>
-        <div><Typography variant="caption" display="block" gutterBottom>{updateMessage}</Typography></div>
-
+      <Grid item xs={12} className={classes.centerBox}> 
+          <Button variant="contained" color="primary" onClick={(event)=>handleSubmit(event)}>
+            Submit
+          </Button>
+      </Grid>        
+      <Grid item xs={12}  className={classes.centerBox}> 
+        <Typography variant="caption" display="block" gutterBottom>{updateMessage}</Typography>
+      </Grid>
+    </Grid>
+    </Container>
     </div>
     )}
     </Fragment>
