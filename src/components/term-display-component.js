@@ -153,7 +153,7 @@ export default function TermDisplayComponent(props) {
       </Grid>
       <Grid item xs={12} sm={12} md={6}>
       <Typography variant="overline" display="block" gutterBottom>
-      Corrensponding Term  ({termData.co_lang})
+      Corresponding Term  ({termData.co_lang})
       </Typography>    
       <Typography variant="h4" gutterBottom>
       {termData.co_term}
