@@ -150,7 +150,7 @@ export default function AddTermForm() {
         
       </Grid>
 
-      <Grid item item xs={12} sm={8} >  
+      <Grid item xs={12} sm={8} >  
           <TextField  
           fullWidth
           id= "co-term" label="Corresponding Term"
@@ -178,7 +178,7 @@ export default function AddTermForm() {
           </TextField>
         </Grid>
 
-        <Grid item item item xs={12} sm={8} > 
+        <Grid item xs={12} sm={8} > 
           <TextField  
           className={classes.textControl} 
           id= "tags" label="Tags"

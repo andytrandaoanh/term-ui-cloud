@@ -75,7 +75,7 @@ export default function TermSearchComponent (props) {
     <Grid container spacing={3}>
         {termData.map((term) => (
           
-        <Grid key={term.term_id} xs={3}>
+        <Grid key={term.term_id} xs={12} md={3}>
            <Card className={classes.termcard}>
             <CardContent>
               <Typography variant="h5" component="h4">
